@@ -1,0 +1,17 @@
+# Compiled object files
+*.o
+*.obj
+
+# Compiled Dynamic Libraries
+*.so
+*.dll
+
+# Compiled Static Libraries
+*.a
+*.la
+*.lib
+
+# Executables
+*.out
+*.out
+*.app
