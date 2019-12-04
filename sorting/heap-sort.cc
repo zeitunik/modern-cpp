@@ -42,7 +42,7 @@ void max_heapify(std::vector<T>& data, int index, size_t heap_size)
 		T temp = data.at(index);
 		data.at(index) = data.at(largest);
 		data.at(largest) = temp;
-		max_heapify(data, largest);
+		max_heapify(data, largest, heap_size);
 	}
 }
 
@@ -58,6 +58,31 @@ void build_max_heap(std::vector<T>& data)
 	}
 }
 
+template <class T>
+void heap_sort(std::vector<T>& data)
+{
+	build_max_heap(data);
+	size_t heap_size = data.size();
+	for (int i = data.size()-1; i >= 0; --i)
+	{
+		// swap current element with the first one (largest in heap)
+		T temp = data.at(i);
+		data.at(i) = data.at(0);
+		data.at(0) = temp;
+		--heap_size;
+		max_heapify(data, 0, heap_size);
+	}
+}
+
+template <class T>
+void print(const std::vector<T>& data)
+{
+	for(T d: data)
+	{
+		std::cout << d << "\t";
+	}
+	std::cout << std::endl;
+}
 
 int main(int argc, char** argv)
 {
@@ -67,11 +92,19 @@ int main(int argc, char** argv)
 			<< "\nRight child of " << num << " is: " << right(num) << "\n";
 	
 	std::vector<int> numbers{16, 4, 10, 14, 7, 9, 3, 2, 8, 1};
-	max_heapify(numbers, 1);
-	
-	for (int num: numbers)
-		std::cout << num << "\t";
+	print(numbers);
+	max_heapify(numbers, 1, numbers.size());	
+	print(numbers);
 	std::cout << std::endl;
+	
+	std::vector<int> numbers2{5, 4, 10, 14, 7, 9, 3, 2, 8, 1};
+	std::vector<int> numbers3 = numbers2;
+	print(numbers2);
+	build_max_heap(numbers2);
+	print(numbers2);
+	
+	heap_sort(numbers3);
+	print(numbers3);
 	
 	return 0;
 }
