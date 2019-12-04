@@ -20,6 +20,14 @@ inline int parent(const int index)
 }
 
 template <class T>
+void swap(T& x, T& y)
+{
+	T temp = x;
+	x = y;
+	y = temp;
+}
+
+template <class T>
 void max_heapify(std::vector<T>& data, int index, size_t heap_size)
 {
 	T l = left(index);
@@ -39,9 +47,7 @@ void max_heapify(std::vector<T>& data, int index, size_t heap_size)
 	if (largest != index)
 	{
 		// swap largest child with parent
-		T temp = data.at(index);
-		data.at(index) = data.at(largest);
-		data.at(largest) = temp;
+		swap<int>(data.at(index), data.at(largest));
 		max_heapify(data, largest, heap_size);
 	}
 }
@@ -66,9 +72,7 @@ void heap_sort(std::vector<T>& data)
 	for (int i = data.size()-1; i >= 0; --i)
 	{
 		// swap current element with the first one (largest in heap)
-		T temp = data.at(i);
-		data.at(i) = data.at(0);
-		data.at(0) = temp;
+		swap<int>(data.at(i), data.at(0));
 		--heap_size;
 		max_heapify(data, 0, heap_size);
 	}
