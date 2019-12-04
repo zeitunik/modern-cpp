@@ -20,18 +20,18 @@ inline int parent(const int index)
 }
 
 template <class T>
-void max_heapify(std::vector<T>& data, int index)
+void max_heapify(std::vector<T>& data, int index, size_t heap_size)
 {
 	T l = left(index);
 	T r = right(index);
 	T largest = -1;
 	// std::cout << "left: " << l << " right: " << r << std::endl;
 	
-	if ( l < data.size() && data.at(l) >= data.at(index) )
+	if ( l < heap_size && data.at(l) > data.at(index) )
 		largest = l;
 	else largest = index;
 	
-	if ( r < data.size() && data.at(r) >= data.at(largest) )
+	if ( r < heap_size && data.at(r) > data.at(largest) )
 		largest = r;
 		
 	// std::cout << "largest: " << largest << std::endl;
@@ -43,6 +43,18 @@ void max_heapify(std::vector<T>& data, int index)
 		data.at(index) = data.at(largest);
 		data.at(largest) = temp;
 		max_heapify(data, largest);
+	}
+}
+
+template <class T>
+void build_max_heap(std::vector<T>& data)
+{
+	// the last floor(data.size()/2) elements of the array are going to 
+	// be the leaves in the tree so they are heaps already
+	size_t heap_size = data.size();
+	for ( int i = heap_size / 2 - 1; i >= 0; --i )
+	{
+		max_heapify(data, i, heap_size);
 	}
 }
 
